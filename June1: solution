@@ -1,0 +1,37 @@
+Count pairs Sum in matrices
+solution in javascript :
+/**
+ * @param {number[][]} mat1
+ * @param {number[][]} mat2
+ * @param {number} x
+ * @returns {number}
+ */
+
+class Solution {
+    countPairs(mat1, mat2, x) {
+        // code here
+         const n = mat1.length;
+        const elementsInMat2 = new Set();
+
+        // Store all elements of mat2 in a set for quick lookup
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                elementsInMat2.add(mat2[i][j]);
+            }
+        }
+
+        let count = 0;
+        // Traverse mat1 and check if (x - a) exists in mat2
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                const a = mat1[i][j];
+                const b = x - a;
+                if (elementsInMat2.has(b)) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+}
