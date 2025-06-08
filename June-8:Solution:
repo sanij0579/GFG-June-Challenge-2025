@@ -1,0 +1,24 @@
+Sum-string
+Solution:
+class Solution:
+    def isSumString(self, s: str) -> bool:
+        def is_valid(s1: str, s2: str, remaining: str) -> bool:
+            if (s1 != "0" and s1.startswith('0')) or (s2 != "0" and s2.startswith('0')):
+                return False
+            
+            sum_str = str(int(s1) + int(s2))
+            if not remaining.startswith(sum_str):
+                return False
+            if remaining == sum_str:
+                return True
+            return is_valid(s2, sum_str, remaining[len(sum_str):])
+
+        n = len(s)
+        for i in range(1, n):  # first number end
+            for j in range(i + 1, n):  # second number end
+                s1 = s[:i]
+                s2 = s[i:j]
+                remaining = s[j:]
+                if is_valid(s1, s2, remaining):
+                    return True
+        return False
