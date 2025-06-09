@@ -1,0 +1,19 @@
+BST with Dead End
+Solution:
+class Solution:
+    def isDeadEnd(self, root):
+        return self._checkDeadEnd(root, 1, float('inf'))
+
+    def _checkDeadEnd(self, node, min_val, max_val):
+        if not node:
+            return False
+
+        # If this is a leaf node and no values can be inserted
+        if min_val == max_val:
+            return True
+
+        # Recurse for left and right subtrees with updated ranges
+        left_dead_end = self._checkDeadEnd(node.left, min_val, node.data - 1)
+        right_dead_end = self._checkDeadEnd(node.right, node.data + 1, max_val)
+
+        return left_dead_end or right_dead_end
