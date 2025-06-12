@@ -1,0 +1,13 @@
+K closest elements
+Solution:
+class Solution:
+    def printKClosest(self, arr, k, x):
+        # Remove x if it exists
+        filtered = [num for num in arr if num != x]
+
+        # Sort based on closeness, tie: prefer larger element
+        filtered.sort(key=lambda a: (abs(a - x), -a))
+
+        # Pick first k elements
+        result = filtered[:k]
+        return result
