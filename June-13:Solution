@@ -1,0 +1,25 @@
+Koko Eating Bananas
+Solution:
+from math import ceil
+
+class Solution:
+    def kokoEat(self, arr, k):
+        def isPossible(speed):
+            hours = 0
+            for bananas in arr:
+                hours += (bananas + speed - 1) // speed  # same as ceil(bananas / speed)
+            return hours <= k
+        
+        low = 1
+        high = max(arr)
+        result = high
+        
+        while low <= high:
+            mid = (low + high) // 2
+            if isPossible(mid):
+                result = mid
+                high = mid - 1  # try smaller speed
+            else:
+                low = mid + 1  # need more speed
+        
+        return result
