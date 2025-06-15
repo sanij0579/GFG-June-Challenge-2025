@@ -1,0 +1,28 @@
+Smallest Divisor
+
+Solution:
+import math
+
+class Solution:
+    def smallestDivisor(self, arr, k):
+        def compute_sum(divisor):
+            total = 0
+            for num in arr:
+                total += math.ceil(num / divisor)
+            return total
+
+        low = 1
+        high = max(arr)
+        result = high
+
+        while low <= high:
+            mid = (low + high) // 2
+            current_sum = compute_sum(mid)
+
+            if current_sum <= k:
+                result = mid
+                high = mid - 1  # try smaller divisor
+            else:
+                low = mid + 1  # try larger divisor
+
+        return result
