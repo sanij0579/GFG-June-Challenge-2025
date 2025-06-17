@@ -1,0 +1,32 @@
+Coin Piles
+Solution:
+from bisect import bisect_left, bisect_right
+
+class Solution:
+    def minimumCoins(self, arr, k):
+        n = len(arr)
+        arr.sort()
+
+        # Prefix sum array
+        prefix = [0] * (n + 1)
+        for i in range(n):
+            prefix[i + 1] = prefix[i] + arr[i]
+
+        min_removed = float('inf')
+
+        for i in range(n):
+            low = arr[i]
+            high = low + k
+
+            # Remove piles < low
+            left_idx = bisect_left(arr, low)
+            left_remove = prefix[left_idx]
+
+            # Reduce piles > high to high
+            right_idx = bisect_right(arr, high)
+            right_remove = (prefix[n] - prefix[right_idx]) - (n - right_idx) * high
+
+            total_removed = left_remove + right_remove
+            min_removed = min(min_removed, total_removed)
+
+        return min_removed
