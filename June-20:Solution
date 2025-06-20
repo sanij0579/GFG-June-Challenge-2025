@@ -1,0 +1,24 @@
+Group Balls by Sequence
+Solution:
+from collections import Counter
+
+class Solution:
+    def validgroup(self, arr, k):
+        # Step 1: Check if total balls can be divided into groups of k
+        if len(arr) % k != 0:
+            return False
+        
+        # Step 2: Count frequency of each ball number
+        freq = Counter(arr)
+
+        # Step 3: Sort the keys (ball numbers)
+        for num in sorted(freq):
+            count = freq[num]
+            if count > 0:
+                # Try to form a group starting from current number
+                for i in range(num, num + k):
+                    if freq[i] < count:
+                        return False
+                    freq[i] -= count
+
+        return True
