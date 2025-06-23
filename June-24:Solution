@@ -1,0 +1,36 @@
+
+Minimum sum
+Solution
+
+class Solution:
+    def minSum(self, arr):
+        arr.sort()
+        
+        # Step 1: Build num1 and num2 as strings
+        num1 = []
+        num2 = []
+
+        for i in range(len(arr)):
+            if i % 2 == 0:
+                num1.append(str(arr[i]))
+            else:
+                num2.append(str(arr[i]))
+        
+        # Step 2: Perform manual addition of num1 and num2 (both are strings)
+        res = []
+        carry = 0
+        i = len(num1) - 1
+        j = len(num2) - 1
+
+        while i >= 0 or j >= 0 or carry:
+            digit1 = int(num1[i]) if i >= 0 else 0
+            digit2 = int(num2[j]) if j >= 0 else 0
+            total = digit1 + digit2 + carry
+            res.append(str(total % 10))
+            carry = total // 10
+            i -= 1
+            j -= 1
+
+        # Step 3: Build result and strip leading zeros
+        result = ''.join(reversed(res)).lstrip('0')
+        return result if result else '0'
