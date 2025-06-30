@@ -1,0 +1,38 @@
+Max min Height
+Solution:
+class Solution:
+    def maxMinHeight(self, arr, k, w):
+        n = len(arr)
+
+        def canReach(min_height):
+            operations = 0
+            diff = [0] * (n + 1)
+            water = 0
+
+            for i in range(n):
+                water += diff[i]
+                current_height = arr[i] + water
+
+                if current_height < min_height:
+                    add = min_height - current_height
+                    operations += add
+                    if operations > k:
+                        return False
+                    water += add
+                    if i + w < len(diff):
+                        diff[i + w] -= add
+            return True
+
+        low = min(arr)
+        high = low + k
+        answer = low
+
+        while low <= high:
+            mid = (low + high) // 2
+            if canReach(mid):
+                answer = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        return answer
